@@ -1,54 +1,43 @@
 'use client'
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { toast } from '@/components/ui/use-toast'
 import { signIn } from "next-auth/react"
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 type FormData = {
   email: string;
 }
 
-async function sendMagicLink(email: string) {
-  const response = await fetch('/api/auth/magic-link', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email }),
-  })
-
-  if (!response.ok) {
-    throw new Error('Failed to send magic link')
-  }
-
-  return response.json()
-}
-
 export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const router = useRouter()
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true)
-    setError(null)
-    setSuccess(false)
 
     try {
       await signIn("nodemailer", {redirect: false, email: data.email})
-      setSuccess(true)
+      toast({
+        title:"Magic link sent!",
+        description:"Check your email.",
+      })
     } catch (err) {
       console.error('An error occurred:', err)
-      setError('Failed to send magic link. Please try again.')
+      toast({
+        title:"Error",
+        description:"An error occurred. Please try again.",
+      })
+
     } finally {
       setIsLoading(false)
     }
+
   }
 
   return (
@@ -82,8 +71,6 @@ export function AuthForm() {
           <Button className="w-full" type="submit" disabled={isLoading}>
             {isLoading ? 'Sending...' : 'Send Magic Link'}
           </Button>
-          {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
-          {success && <p className="text-sm text-green-500 mt-2">Magic link sent! Check your email.</p>}
         </CardFooter>
       </form>
     </Card>

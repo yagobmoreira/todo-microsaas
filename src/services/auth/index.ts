@@ -20,5 +20,12 @@ export const { auth, handlers } = NextAuth({
     },
     from: process.env.EMAIL_FROM,
   }),],
-  adapter: PrismaAdapter(prisma)
+  adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/auth",
+    signOut: "/auth",
+    error: "/auth",
+    verifyRequest: "/auth",
+    newUser: "/app"
+  }
 })
