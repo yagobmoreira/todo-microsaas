@@ -1,11 +1,16 @@
 'use client'
 
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+
+type FormData = {
+  email: string;
+}
 
 async function sendMagicLink(email: string) {
   const response = await fetch('/api/auth/magic-link', {
@@ -22,20 +27,20 @@ async function sendMagicLink(email: string) {
 }
 
 export function AuthForm() {
-  const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+
+  const onSubmit = async (data: FormData) => {
     setIsLoading(true)
     setError(null)
     setSuccess(false)
 
     try {
-      await sendMagicLink(email)
+      await sendMagicLink(data.email)
       setSuccess(true)
     } catch (err) {
       console.error('An error occurred:', err)
@@ -51,7 +56,7 @@ export function AuthForm() {
         <CardTitle>Login</CardTitle>
         <CardDescription>Enter your email to receive a magic link</CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
@@ -60,10 +65,15 @@ export function AuthForm() {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                {...register("email", { 
+                  required: "Email is required", 
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: "Entered value does not match email format"
+                  }
+                })}
               />
+              {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
             </div>
           </div>
         </CardContent>
