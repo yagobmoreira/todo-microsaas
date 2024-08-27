@@ -10,7 +10,7 @@ import { SettingsSidebar } from './_components/settings-sidebar'
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <DashboardPage>
-      <DashboardPageHeader>
+      <DashboardPageHeader className="py-5">
         <DashboardPageHeaderTitle>Configurações</DashboardPageHeaderTitle>
       </DashboardPageHeader>
 

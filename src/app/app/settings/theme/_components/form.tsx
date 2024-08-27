@@ -39,8 +39,8 @@ export function ThemeForm() {
     theme.setTheme(data.theme)
 
     toast({
-      title: 'Success',
-      description: 'Your profile has been updated successfully.',
+      title: 'Sucesso',
+      description: 'O tema foi atualizado com sucesso.',
     })
   })
 
@@ -49,10 +49,8 @@ export function ThemeForm() {
       <form onSubmit={onSubmit} className="space-y-8">
         <Card>
           <CardHeader>
-            <CardTitle>Theme</CardTitle>
-            <CardDescription>
-              Select the theme for the dashboard.
-            </CardDescription>
+            <CardTitle>Tema</CardTitle>
+            <CardDescription>Selecione o tema para o painel.</CardDescription>
           </CardHeader>
           <CardContent>
             <FormField
@@ -88,7 +86,7 @@ export function ThemeForm() {
                           </div>
                         </div>
                         <span className="block w-full p-2 text-center font-normal">
-                          Light
+                          Claro
                         </span>
                       </FormLabel>
                     </FormItem>
@@ -114,7 +112,7 @@ export function ThemeForm() {
                           </div>
                         </div>
                         <span className="block w-full p-2 text-center font-normal">
-                          Dark
+                          Escuro
                         </span>
                       </FormLabel>
                     </FormItem>
@@ -127,7 +125,7 @@ export function ThemeForm() {
 
         <SheetFooter>
           <Button disabled={form.formState.isSubmitting} type="submit">
-            {form.formState.isSubmitting ? 'Saving...' : 'Save changes'}
+            {form.formState.isSubmitting ? 'Salvando...' : 'Salvar alterações'}
           </Button>
         </SheetFooter>
       </form>
