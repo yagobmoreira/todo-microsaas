@@ -1,50 +1,61 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
-import { signIn } from "next-auth/react"
+import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
-  email: string;
+  email: string
 }
 
 export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true)
 
     try {
-      await signIn("nodemailer", {redirect: false, email: data.email})
+      await signIn('nodemailer', { redirect: false, email: data.email })
       toast({
-        title:"Magic link sent!",
-        description:"Check your email.",
+        title: 'Magic link sent!',
+        description: 'Check your email.',
       })
     } catch (err) {
       console.error('An error occurred:', err)
       toast({
-        title:"Error",
-        description:"An error occurred. Please try again.",
+        title: 'Error',
+        description: 'An error occurred. Please try again.',
       })
-
     } finally {
       setIsLoading(false)
     }
-
   }
 
   return (
     <Card className="w-[350px] mx-auto mt-20">
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        <CardDescription>Enter your email to receive a magic link</CardDescription>
+        <CardDescription>
+          Enter your email to receive a magic link
+        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
@@ -55,15 +66,19 @@ export function AuthForm() {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                {...register("email", { 
-                  required: "Email is required", 
+                {...register('email', {
+                  required: 'Email is required',
                   pattern: {
                     value: /\S+@\S+\.\S+/,
-                    message: "Entered value does not match email format"
-                  }
+                    message: 'Entered value does not match email format',
+                  },
                 })}
               />
-              {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
+              {errors.email && (
+                <span className="text-sm text-red-500">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
           </div>
         </CardContent>
