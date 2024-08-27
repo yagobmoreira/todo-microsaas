@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model Account {
@@ -71,8 +71,9 @@ model Todo {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  doneAt    DateTime?
 
   @@map("todos")
 }
