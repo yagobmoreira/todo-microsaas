@@ -49,8 +49,8 @@ export function TodoUpsertSheet({ children }: TodoUpsertSheetProps) {
     ref.current?.click()
 
     toast({
-      title: 'Success',
-      description: 'Your todo has been updated successfully.',
+      title: 'Sucesso',
+      description: 'Seu todo foi atualizado com sucesso.',
     })
   })
 
@@ -61,9 +61,11 @@ export function TodoUpsertSheet({ children }: TodoUpsertSheetProps) {
       </SheetTrigger>
       <SheetContent className="h-screen flex flex-col">
         <SheetHeader>
-          <SheetTitle>Upsert Todo</SheetTitle>
+          <SheetTitle>Adicionar/Editar Todo</SheetTitle>
           <SheetDescription>
-            {"Add or edit your todo item here. Click save when you're done."}
+            {
+              'Adicione ou edite seu item todo aqui. Clique em salvar quando terminar.'
+            }
           </SheetDescription>
         </SheetHeader>
         <Form {...form}>
@@ -76,19 +78,22 @@ export function TodoUpsertSheet({ children }: TodoUpsertSheetProps) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>Título</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your todo title" {...field} />
+                    <Input
+                      placeholder="Digite o título do seu todo"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
-                    This will be the publicy displayed name for the task.
+                    Este será o nome exibido publicamente para a tarefa.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <SheetFooter>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Salvar alterações</Button>
             </SheetFooter>
           </form>
         </Form>
