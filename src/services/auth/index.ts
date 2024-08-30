@@ -4,6 +4,7 @@ import Google from 'next-auth/providers/google'
 import Nodemailer from 'next-auth/providers/nodemailer'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '../database'
+import { createStripeConsumer } from '../stripe'
 
 export const { auth, handlers } = NextAuth({
   providers: [
@@ -28,5 +29,13 @@ export const { auth, handlers } = NextAuth({
     error: '/auth',
     verifyRequest: '/auth',
     newUser: '/app',
+  },
+  events: {
+    createUser: async (message) => {
+      await createStripeConsumer({
+        name: message.user.name as string,
+        email: message.user.email as string,
+      })
+    },
   },
 })
