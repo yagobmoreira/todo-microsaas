@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">
+  TODO Micro-SaaS
+</h1>
 
-## Getting Started
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/yagobmoreira/todo-microsaas">
+  <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/yagobmoreira/todo-microsaas" />
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/yagobmoreira/todo-microsaas">
+</p>
 
-First, run the development server:
+## Descrição
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Este repositório abriga um sistema TODO desenvolvido com as melhores práticas de Micro-SaaS, utilizando Next.js para gerenciar o servidor e React para as interfaces gráficas. O Prisma foi empregado para consultas ao banco de dados, e o serviço de assinatura é gerenciado com Stripe.
+
+## Configuração do Projeto
+
+### Pré-requisitos
+
+- Node.js
+- NPM
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env.development.local` na raiz do projeto, de acordo com o exemplo [.env.example](/.env.example)
+
+```shell
+touch .env.development.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Serviço de e-mail
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para desenvolvimento, foi utlizado [mailtrap](https://mailtrap.io/). Após criar uma conta, configure uma Inbox e adicione as credenciais ao arquivo `.env.development.local`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Serviço de cobrança
 
-## Learn More
+Para cobrança de usuários, foi utilizado o [stripe](https://stripe.com/). Após criar uma conta, crie um projeto e adicione as chaves de APi necessárias  ao arquivo `.env.development.local`. Você deve criar os produtos, como FREE e PRO, e adicionar às variáveis de ambiente, os ID's necessários.
 
-To learn more about Next.js, take a look at the following resources:
+### Instalação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Instale as dependências do projeto:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+npm install
+```
 
-## Deploy on Vercel
+Gere o Cliente Prisma:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx prisma generate
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Execute as migrations:
+```bash
+npx prisma migrate dev
+```
+
+### Executando o Projeto
+
+#### Desenvolvimento
+
+Para rodar o projeto em modo de desenvolvimento:
+
+```bash
+npm run start:dev
+```
+
+## 🛠 Tecnologias
+
+As seguintes libs foram usadas na construção do projeto:
+
+- **[NextJs](https://nextjs.org/)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Prisma](https://www.prisma.io/)**
+- **[Stripe](https://stripe.com/)**
+- **[Mailtrap](https://mailtrap.io/)**
+- **[shadcn/ui](https://ui.shadcn.com/)**
